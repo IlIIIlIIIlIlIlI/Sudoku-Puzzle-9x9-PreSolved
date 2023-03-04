@@ -40,6 +40,9 @@ public class SudokuController {
             }
         }
 
+        printArrayMatrix(temporary9x9MatrixWithDiagonalElementsOnly);
+        System.out.println(" ");
+
         return temporary9x9MatrixWithDiagonalElementsOnly;
     }
 
