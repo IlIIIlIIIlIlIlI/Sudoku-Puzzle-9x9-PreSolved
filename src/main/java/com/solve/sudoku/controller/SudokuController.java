@@ -1,5 +1,6 @@
 package com.solve.sudoku.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 public class SudokuController {
     public final static Integer[] ALL_VALID_ENTRY_NUMBER = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
+    @CrossOrigin(origins = "https://sudoku-puzzle-9x9-presolved-production.up.railway.app")
     @GetMapping("/sudoku")
     public int[][] fillNonMatrixElementsIn9x9Matrix() {
         int[][] matrix9x9WithOnlyDiagonalElements = createBaseMatrixWithDiagonalElements();
