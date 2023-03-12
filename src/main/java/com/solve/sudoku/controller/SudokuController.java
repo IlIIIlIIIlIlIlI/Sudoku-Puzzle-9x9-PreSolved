@@ -13,7 +13,7 @@ import java.util.Set;
 public class SudokuController {
     public final static Integer[] ALL_VALID_ENTRY_NUMBER = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    public final static Integer[] COUNT_OF_NUMBERS_TO_BE_HIDDEN = {1};
+    public final static Integer[] COUNT_OF_NUMBERS_TO_BE_HIDDEN = {3, 4, 5, 6};
 
     @CrossOrigin(origins = "*")
     @GetMapping("/sudoku")
