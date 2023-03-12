@@ -13,9 +13,11 @@ import java.util.Set;
 public class SudokuController {
     public final static Integer[] ALL_VALID_ENTRY_NUMBER = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
+    public final static Integer[] COUNT_OF_NUMBERS_TO_BE_HIDDEN = {3, 4, 5, 6};
+
     @CrossOrigin(origins = "*")
     @GetMapping("/sudoku")
-    public int[][] fillNonMatrixElementsIn9x9Matrix() {
+    public int[][][] fillNonMatrixElementsIn9x9Matrix() {
         int[][] matrix9x9WithOnlyDiagonalElements = createBaseMatrixWithDiagonalElements();
         int[][] temporary9x9MatrixWithDiagonalElementsOnly = mapDiagonalMatrixInTempMatrix(matrix9x9WithOnlyDiagonalElements);
 
@@ -42,10 +44,18 @@ public class SudokuController {
             }
         }
 
+        int[][] solvedMatrixWithSomeRandomNumbersRemoved = getRandomNumberRemovedFromPrefilledMatrix(temporary9x9MatrixWithDiagonalElementsOnly);
+
         printArrayMatrix(temporary9x9MatrixWithDiagonalElementsOnly);
         System.out.println(" ");
+        printArrayMatrix(solvedMatrixWithSomeRandomNumbersRemoved);
+        System.out.println(" ");
 
-        return temporary9x9MatrixWithDiagonalElementsOnly;
+        int[][][] solutionAndPuzzleArray = new int[2][9][9];
+        solutionAndPuzzleArray[0] = temporary9x9MatrixWithDiagonalElementsOnly;
+        solutionAndPuzzleArray[1] = solvedMatrixWithSomeRandomNumbersRemoved;
+
+        return solutionAndPuzzleArray;
     }
 
     public Set<Integer> getSetOfNumbersInGivenMatrix(int[][] matrix9x9, int rowIndex, int columnIndex) {
@@ -188,6 +198,47 @@ public class SudokuController {
             }
             System.out.println(" ");
         }
+    }
+
+    public int[][] getRandomNumberRemovedFromPrefilledMatrix(int[][] matrix9x9) {
+        int[][] tempMatrix9x9 = createNxNMatrix(9);
+
+        for (int i = 0; i < 9; i++) {
+            Integer[] currentRow =  getIntArrayCastedToIntegerArray(matrix9x9[i]);
+
+            int countOfNumbersToBeHiddenInARow = selectRandomElementFromGivenSetOfNumber(new HashSet<>(Arrays.asList(COUNT_OF_NUMBERS_TO_BE_HIDDEN)));
+
+            Set<Integer> numbersToBeHidden =  getMRandomNumbersFromNNumbers(countOfNumbersToBeHiddenInARow, new HashSet<>(Arrays.asList(currentRow)));
+
+            for (int j = 0; j < 9; j++) {
+                tempMatrix9x9[i][j] = numbersToBeHidden.contains(matrix9x9[i][j]) ? 0 : matrix9x9[i][j];
+            }
+        }
+
+        return tempMatrix9x9;
+    }
+
+    public Integer[] getIntArrayCastedToIntegerArray(int[] numberArray) {
+        Integer[] integerArray = new Integer[numberArray.length];
+        for(int i = 0; i < numberArray.length; i++) {
+            integerArray[i] = getIntCastedToInteger(numberArray[i]);
+        }
+
+        return integerArray;
+    }
+
+    public Integer getIntCastedToInteger(int n) {
+        return n;
+    }
+
+    public Set<Integer> getMRandomNumbersFromNNumbers(int M, Set<Integer> numberSet) {
+        Set<Integer> randomNumbers = new HashSet<>();
+
+        while(randomNumbers.size() < M) {
+            randomNumbers.add(selectRandomElementFromGivenSetOfNumber(numberSet));
+        }
+
+        return randomNumbers;
     }
 }
 
