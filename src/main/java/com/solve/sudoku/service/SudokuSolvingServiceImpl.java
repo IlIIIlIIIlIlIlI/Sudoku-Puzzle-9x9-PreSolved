@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.Date;
 
 @Service
 public class SudokuSolvingServiceImpl implements SudokuSolvingService{
@@ -42,10 +43,14 @@ public class SudokuSolvingServiceImpl implements SudokuSolvingService{
 
         int[][] solvedMatrixWithSomeRandomNumbersRemoved = getRandomNumberRemovedFromPrefilledMatrix(temporary9x9MatrixWithDiagonalElementsOnly);
 
+        System.out.println("_".repeat(45));
+        System.out.println(" Received on " + new Date());
+        System.out.println(" Solution Matrix");
         printArrayMatrix(temporary9x9MatrixWithDiagonalElementsOnly);
         System.out.println(" ");
+        System.out.println(" Puzzle Matrix");
         printArrayMatrix(solvedMatrixWithSomeRandomNumbersRemoved);
-        System.out.println(" ");
+        System.out.println("_".repeat(45));
 
         int[][][] solutionAndPuzzleArray = new int[2][9][9];
         solutionAndPuzzleArray[0] = temporary9x9MatrixWithDiagonalElementsOnly;
