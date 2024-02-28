@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public interface SudokuController {
 
-    @CrossOrigin(origins = "*")
+//    @CrossOrigin(origins = "*")
     @GetMapping("/sudoku")
     public int[][][] fillNonMatrixElementsIn9x9Matrix();
 
